@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  web:
+    depends_on:
+      - db
+    image: wordpress
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_PASSWORD: digitalocean
+      WORDPRESS_DB_USER: digitalocean
+      WORDPRESS_DB_NAME: digitalocean
+  db:
+    image: mysql:5.5
+    expose:
+      - 3306
+    volumes:
+      - ./.data/db:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: digitalocean
+      MYSQL_DATABASE: digitalocean
+      MYSQL_USER: digitalocean
+      MYSQL_PASSWORD: digitalocean
