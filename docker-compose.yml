@@ -1,4 +1,4 @@
-version: '2'
+version: '2.2'
 
 services:
   web:
@@ -10,11 +10,14 @@ services:
       - 443:443
     volumes:
       - ./src:/var/www/html
+      # - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_PASSWORD: digitalocean
       WORDPRESS_DB_USER: digitalocean
       WORDPRESS_DB_NAME: digitalocean
+    mem_limit: 650m
+    cpus: .8
   db:
     image: mysql:5.5
     expose:
@@ -22,6 +25,8 @@ services:
     volumes:
       - ./.data/db:/var/lib/mysql
     restart: always
+    mem_limit: 300m
+    cpus: .15
     environment:
       MYSQL_ROOT_PASSWORD: digitalocean
       MYSQL_DATABASE: digitalocean
